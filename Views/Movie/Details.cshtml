@@ -1,0 +1,12 @@
+@model movieApp.Models.Movie
+
+<h1>@Model.Title</h1>
+
+<p><strong>Director:</strong> @Model.Director</p>
+<p><strong>Synopsis:</strong> @Model.Synopsis</p>
+
+<a href="@Url.Action("Index", "Movie")">Back to movie list</a>
+
+<div style="text-align: center; margin-top: 2rem;">
+    <a href="@Url.Action("Index", "Movie")" class="link-button">Return to Home</a>
+</div>

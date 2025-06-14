@@ -1,0 +1,19 @@
+@model List<movieApp.Models.Movie>
+
+<h1>Movie List</h1>
+
+<ul>
+@foreach (var movie in Model)
+{
+    <li>
+        <a href="@Url.Action("Details", "Movie", new { id = movie.Id })">
+            @movie.Title
+        </a>
+        by @movie.Director
+    </li>
+}
+</ul>
+
+<div style="text-align: center; margin-top: 2rem;">
+    <a href="@Url.Action("Index", "Movie")" class="link-button">Return to Home</a>
+</div>

@@ -1,6 +1,7 @@
 using movieApp.Data;                // So you can use your AppDbContext
 using Microsoft.EntityFrameworkCore; // For EF Core tools
 
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.

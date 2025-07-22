@@ -1,11 +1,15 @@
 using movieApp.Data;                // So you can use your AppDbContext
 using Microsoft.EntityFrameworkCore; // For EF Core tools
+using Microsoft.AspNetCore.OpenApi;
+using movieApp.Data;
 
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddOpenApi(); // Add OpenAPI support
 builder.Services.AddDbContext<AppDbContext>(options =>      // review this cause im confused
     options.UseSqlite("Data Source=movies.db"));
 
@@ -19,6 +23,12 @@ if (!app.Environment.IsDevelopment())
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
+
+app.MapOpenApi();
+app.UseSwaggerUi(options =>
+{
+    options.DocumentPath = "/openapi/v1.json";
+});
 
 app.UseHttpsRedirection();
 app.UseRouting();

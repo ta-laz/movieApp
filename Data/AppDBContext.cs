@@ -11,6 +11,7 @@ namespace movieApp.Data
             // Console.Write("");
         }
 
-        public DbSet<Movie> Movies { get; set; }        //I want to store a table of Movie object (defined elsewhere)
+        public DbSet<Movie> Movies { get; set; }
+        public DbSet<Admin> Admin { get; set; }       //I want to store a table of Movie object (defined elsewhere)
     }
 }

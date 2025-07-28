@@ -1,8 +1,6 @@
 using movieApp.Data;                // So you can use your AppDbContext
 using Microsoft.EntityFrameworkCore; // For EF Core tools
 using Microsoft.AspNetCore.OpenApi;
-using movieApp.Data;
-
 
 var builder = WebApplication.CreateBuilder(args);
 

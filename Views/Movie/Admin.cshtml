@@ -1,0 +1,19 @@
+@model movieApp.Models.Admin
+
+<h2>Admin</h2>
+
+<form asp-action="Admin" method="post">
+    <div>
+        <label>Plex IP</label>
+        <input asp-for="PlexIP" />
+    </div>
+    <div>
+        <label>Token</label>
+        <input asp-for="Token" />
+    </div>
+    <button type="submit">Sync</button>
+</form>
+
+<div style="text-align: center; margin-top: 2rem;">
+    <a href="@Url.Action("Index", "Movie")" class="link-button">Return to Home</a>
+</div>

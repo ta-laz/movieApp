@@ -2,7 +2,10 @@ using Microsoft.AspNetCore.Mvc;             // this is like the flask equivalent
 using movieApp.Models;                      //this is where our movie class from Models comes in 
 using System.Collections.Generic;           // I think this is what allows me to save movies as an array instead of database 
 using System.Linq;                          // adds some additional functions (LINQ = language integrated query)
+using System.Xml.Linq;
 using movieApp.Data;
+using Microsoft.CodeAnalysis.Scripting.Hosting;
+using Microsoft.CodeAnalysis.Elfie.Serialization;
 
 
 namespace movieApp.Controllers
@@ -51,7 +54,7 @@ namespace movieApp.Controllers
         public IActionResult Random()
         {
             var allMovies = _context.Movies.ToList(); // Pulls all movies into memory
-            
+
             if (allMovies.Count == 0)
                 return NotFound("No movies in database.");
 
@@ -62,7 +65,6 @@ namespace movieApp.Controllers
             return RedirectToAction("Details", new { id = randomMovie.Id });
         }
 
-        // Show the empty form for the create page now 
         [HttpGet]
         public IActionResult Create()
         {
@@ -81,6 +83,39 @@ namespace movieApp.Controllers
             }
 
             return View(movie);
+        }
+
+        [HttpGet]
+        public IActionResult Admin()
+        {
+            return View();
+        }
+
+        // Handle the submitted form
+        [HttpPost]
+        public async Task<IActionResult> Admin(Admin admin)
+        {
+            {
+                // return Content($"Plex IP: {admin.PlexID}, Token: {admin.Token}");
+                string url = $"http://{admin.PlexIP}/library/sections/1/all?X-Plex-Token={admin.Token}";
+
+                // save the outout from the URL into a string which you can then parse?
+                HttpClient client = new HttpClient();
+                string apidata = await client.GetStringAsync(url);
+
+                // creating a new document out of the now parsed API URL output
+                XDocument doc = XDocument.Parse(apidata);
+
+                // now it's parsed, pull out what you need from the nested nodes? 
+                // MediaContainer -> Videos -> Title, Summary, Genre tag
+                IEnumerable<XNode> nodes =
+                    from nd in doc.Nodes()
+                    select nd;
+                foreach (XNode node in nodes)
+                    Console.WriteLine(node);
+
+                return Redirect(url);
+            }
         }
     }
 }
